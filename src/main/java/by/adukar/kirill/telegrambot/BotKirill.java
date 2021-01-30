@@ -13,7 +13,7 @@ public class BotKirill extends TelegramLongPollingBot {
      */
     @Override
     public void onUpdateReceived(Update update) {
-        if(update.getMessage().getText() == "/help") {
+        if(update.getMessage().getText().equals("/help")) {
             sendMsg("Сам себе помоги");
         }
         else{
