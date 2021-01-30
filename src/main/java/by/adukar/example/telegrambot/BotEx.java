@@ -5,7 +5,7 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-public class Bot extends TelegramLongPollingBot {
+public class BotEx extends TelegramLongPollingBot {
 
     /**
      * Метод для приема сообщений.
