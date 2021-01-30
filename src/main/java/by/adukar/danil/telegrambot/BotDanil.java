@@ -1,4 +1,4 @@
-package by.adukar.danil;
+package by.adukar.danil.telegrambot;
 
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
@@ -14,7 +14,12 @@ public class BotDanil extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         String message = update.getMessage().getText();
-        sendMsg(message);
+        if(message == "/help") {
+            sendMsg("Помощь уже в пути");
+        }
+        else{
+            sendMsg(update.getMessage().getText());
+        }
     }
 
 
