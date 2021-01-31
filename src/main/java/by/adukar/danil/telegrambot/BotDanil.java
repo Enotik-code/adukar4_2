@@ -14,18 +14,23 @@ public class BotDanil extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         String message = update.getMessage().getText();
-        if(message == "/help") {
-            sendMsg("Помощь уже в пути");
+
+        if(message.equals("/start")) {
+            sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + " \n Вот команды, которые я могу для вас выполнить: \n 1. /start - Начать. \n 2. /help - Помощь для работы с ботом. \n 3. /commands - Показать список всех команд. \n 4. /time - Показать текущую дату и время.", update.getMessage().getChatId());
+        }
+        if(message.equals("/help")) {
+            sendMsg("Помощь уже в пути", update.getMessage().getChatId());
         }
         else{
-            sendMsg(update.getMessage().getText());
+            sendMsg(update.getMessage().getText(), update.getMessage().getChatId());
         }
+        System.out.println();
     }
 
 
-    public synchronized void sendMsg(String s) {
+    public synchronized void sendMsg(String s, Long chat_id) {
         SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(1035877113L);
+        sendMessage.setChatId(chat_id);
         sendMessage.setText(s);
         try {
             execute(sendMessage);
@@ -40,7 +45,7 @@ public class BotDanil extends TelegramLongPollingBot {
      */
     @Override
     public String getBotUsername() {
-        return "KurchanovEnglishBot ";
+        return "TranslatorDanil_bot";
     }
 
     /**
@@ -49,6 +54,6 @@ public class BotDanil extends TelegramLongPollingBot {
      */
     @Override
     public String getBotToken() {
-        return "1697825241:AAHV2Kn8aSQ53sLHyOGQfMLj-hB_xGas97Y";
+        return "1664772721:AAEesVvTis2sy8NsvOLKs3OcB_Q2Lan-Vns";
     }
 }
