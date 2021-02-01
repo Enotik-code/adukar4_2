@@ -1,9 +1,11 @@
 package by.adukar.danil.telegrambot;
 
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.objects.Document;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import java.time.*;
 
 public class BotDanil extends TelegramLongPollingBot {
 
@@ -14,16 +16,37 @@ public class BotDanil extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         String message = update.getMessage().getText();
-
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+        String month = Integer.toString(date.getMonthValue());
+        String day = Integer.toString(date.getDayOfMonth());
+        String hour = Integer.toString(time.getHour());
+        String minute = Integer.toString(time.getMinute());
+        String second = Integer.toString(time.getSecond());
         if(message.equals("/start")) {
-            sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + " \n Вот команды, которые я могу для вас выполнить: \n 1. /start - Начать. \n 2. /help - Помощь для работы с ботом. \n 3. /commands - Показать список всех команд. \n 4. /time - Показать текущую дату и время.", update.getMessage().getChatId());
+            sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + " \nВот команды, которые я могу для вас выполнить: \n1) /start - Начать. \n2) /help - Помощь для работы с ботом. \n3) /commands - Показать список всех команд.\n4) /time - Показать текущую дату и время.\n5)/translate - Начать переводить текст.", update.getMessage().getChatId());
         }
         if(message.equals("/help")) {
-            sendMsg("Помощь уже в пути", update.getMessage().getChatId());
+            sendMsg("Для того чтобы начатьпереводить текст, напишите /translate, и впишите текст нужный для перевода, для завершения работы переводчика, впишите /exit. Приятного пользования TranslatorBot!", update.getMessage().getChatId());
         }
-        else{
-            sendMsg(update.getMessage().getText(), update.getMessage().getChatId());
+        if(message.equals("/translate")) {
+            sendMsg("Введите текст для перевода. \n/exit - Перестать переводить текст.", update.getMessage().getChatId());
         }
+        if(message.equals("/commands")) {
+            sendMsg("/start - Начать \n/help - Помощь \n/commands - Все команды \n/time - Время и дата \n/translate - Начать перевод \n/exit - Остановить перевод.", update.getMessage().getChatId());
+        }
+        if(message.equals("/time")) {
+
+            if (date.getMonthValue() < 10) {month = "0" + Integer.toString(date.getMonthValue());}
+            if (date.getDayOfMonth() < 10) {day = "0" + Integer.toString(date.getDayOfMonth());}
+            if (time.getHour() < 10) {hour = "0" + Integer.toString(time.getHour());}
+            if (time.getMinute() < 10) {minute = "0" + Integer.toString(time.getMinute());}
+            if (time.getSecond() < 10) {second = "0" + Integer.toString(time.getSecond());}
+            sendMsg(date.getYear() +"-"+ month +"-"+ day +"\n"+ hour +":"+ minute +":"+ second, update.getMessage().getChatId());
+        }
+        //else{
+            //sendMsg(update.getMessage().getText(), update.getMessage().getChatId());
+        //}
         System.out.println();
     }
 
