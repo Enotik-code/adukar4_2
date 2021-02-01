@@ -1,4 +1,4 @@
-package veronika.telegrambot;
+package by.adukar.veronika.telegrambot;
 
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
