@@ -13,8 +13,12 @@ public class BotVeronika extends TelegramLongPollingBot {
      */
     @Override
     public void onUpdateReceived(Update update) {
-        String message = update.getMessage().getText();
-        sendMsg(message);
+        if(update.getMessage().getText().equals("/start")) {
+            sendMsg("Добрый вечер!");
+        }
+        else{
+            sendMsg(update.getMessage().getText());
+        }
     }
 
 
