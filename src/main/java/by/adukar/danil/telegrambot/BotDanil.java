@@ -6,6 +6,7 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import java.time.*;
+import java.util.ArrayList;
 
 public class BotDanil extends TelegramLongPollingBot {
 
@@ -13,6 +14,7 @@ public class BotDanil extends TelegramLongPollingBot {
      * Метод для приема сообщений.
      * @param update Содержит сообщение от пользователя.
      */
+    ArrayList<String> history = new ArrayList<>();
     @Override
     public void onUpdateReceived(Update update) {
         String message = update.getMessage().getText();
@@ -23,8 +25,9 @@ public class BotDanil extends TelegramLongPollingBot {
         String hour = Integer.toString(time.getHour());
         String minute = Integer.toString(time.getMinute());
         String second = Integer.toString(time.getSecond());
+        String final_history = "";
         if(message.equals("/start")) {
-            sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + " \nВот команды, которые я могу для вас выполнить: \n1) /start - Начать. \n2) /help - Помощь для работы с ботом. \n3) /commands - Показать список всех команд.\n4) /time - Показать текущую дату и время.\n5)/translate - Начать переводить текст.", update.getMessage().getChatId());
+            sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + "\nВот команды, которые я могу для вас выполнить:\n1) /start - Начать\n2) /help - Помощь для работы с ботом\n3) /commands - Показать список всех команд\n4) /time - Показать текущую дату и время\n5)/translate - Начать переводить текст\n6)/history - История запросов на время\n6)/clear - Очистить историю времени", update.getMessage().getChatId());
         }
         if(message.equals("/help")) {
             sendMsg("Для того чтобы начатьпереводить текст, напишите /translate, и впишите текст нужный для перевода, для завершения работы переводчика, впишите /exit. Приятного пользования TranslatorBot!", update.getMessage().getChatId());
@@ -33,7 +36,7 @@ public class BotDanil extends TelegramLongPollingBot {
             sendMsg("Введите текст для перевода. \n/exit - Перестать переводить текст.", update.getMessage().getChatId());
         }
         if(message.equals("/commands")) {
-            sendMsg("/start - Начать \n/help - Помощь \n/commands - Все команды \n/time - Время и дата \n/translate - Начать перевод \n/exit - Остановить перевод.", update.getMessage().getChatId());
+            sendMsg("/start - Начать \n/help - Помощь \n/commands - Все команды \n/time - Время и дата \n/translate - Начать перевод \n/exit - Остановить перевод \n/history - История просмотра времени \n/clear - Очистить историю времени", update.getMessage().getChatId());
         }
         if(message.equals("/time")) {
 
@@ -43,11 +46,27 @@ public class BotDanil extends TelegramLongPollingBot {
             if (time.getMinute() < 10) {minute = "0" + Integer.toString(time.getMinute());}
             if (time.getSecond() < 10) {second = "0" + Integer.toString(time.getSecond());}
             sendMsg(date.getYear() +"-"+ month +"-"+ day +"\n"+ hour +":"+ minute +":"+ second, update.getMessage().getChatId());
+            history.add(date.getYear() +"-"+ month +"-"+ day +" | "+ hour +":"+ minute +":"+ second);
+        }
+        if(message.equals("/history")) {
+            if (history.size() != 0) {
+                for (int i = 0; i < history.size(); i++) {
+                    final_history = final_history + (i + 1) + ") | " + history.get(i) + "\n";
+                }
+                final_history = final_history + "/clear";
+            } else {
+                final_history = "Ваша история времени пуста.";
+            }
+            sendMsg(final_history + "", update.getMessage().getChatId());
+        }
+        if(message.equals("/clear")) {
+            history.clear();
+            final_history = "";
+            sendMsg("История успешно очищена", update.getMessage().getChatId());
         }
         //else{
             //sendMsg(update.getMessage().getText(), update.getMessage().getChatId());
         //}
-        System.out.println();
     }
 
 
