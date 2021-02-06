@@ -1,4 +1,4 @@
-package by.adukar.telegrambot;
+package by.adukar.yuri;
 
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
