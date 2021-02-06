@@ -13,25 +13,28 @@ public class BotVeronika extends TelegramLongPollingBot {
      */
     @Override
     public void onUpdateReceived(Update update) {
-        if(update.getMessage().getText().equals("/start")) {
-            sendMsg("Добрый вечер!");
+        String message = update.getMessage().getText();
+        if(message.equals("/start")) {
+            sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + "!", update.getMessage().getChatId());
         }
-        else{
-            sendMsg(update.getMessage().getText());
+        if(message.equals("/help")) {
+            sendMsg("Команды для работы с ботом: /start - начало чата, /help - список команд", update.getMessage().getChatId());
         }
+        //else{
+        //sendMsg(update.getMessage().getText(), update.getMessage().getChatId());
+        //}
     }
 
 
-    public synchronized void sendMsg(String s) {
+    public synchronized void sendMsg(String s, Long chat_id) {
         SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(756888943L);
+        sendMessage.setChatId(chat_id);
         sendMessage.setText(s);
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
             System.out.println( "Exception: " + e.toString());
         }
-    }
 
     /**
      * Метод возвращает имя бота, указанное при регистрации.
