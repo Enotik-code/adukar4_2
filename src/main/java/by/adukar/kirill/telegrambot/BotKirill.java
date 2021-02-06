@@ -13,12 +13,62 @@ public class BotKirill extends TelegramLongPollingBot {
      */
     @Override
     public void onUpdateReceived(Update update) {
-        if(update.getMessage().getText().equals("/help")) {
-            sendMsg("Сам себе помоги");
+        int answer1=0;
+        int answer=0;
+        int max = 0;
+        int min = 0;
+
+        if(update.getMessage().getText().equals("/random1")) {
+            double result = Math.random()*100;
+             answer = (int) (result*100);
+            sendMsg(answer+"");
+            System.out.println(result);
         }
         else{
             sendMsg(update.getMessage().getText());
         }
+        if(update.getMessage().getText().equals("/random2")) {
+            double result1 = Math.random()*100;
+             answer1 = (int) (result1*100);
+            sendMsg(answer1+"");
+            System.out.println(result1);
+        }
+        else{
+            sendMsg(update.getMessage().getText());
+        }
+        if(answer>answer1){
+            min = answer1;
+        }
+        else {
+            min=answer;
+        }
+
+        if(update.getMessage().getText().equals("/min" )) {
+            sendMsg(min+"");
+
+
+        }
+        else{
+            sendMsg(update.getMessage().getText());
+        }
+        if(answer>answer1){
+            max=answer;
+        }
+        else{
+            max=answer1;
+        }
+        if(update.getMessage().getText().equals("/max" )) {
+            sendMsg(max+"");
+
+        }
+        else{
+            sendMsg(update.getMessage().getText());
+        }
+
+
+
+
+
     }
 
 
