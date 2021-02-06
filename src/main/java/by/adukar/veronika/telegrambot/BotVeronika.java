@@ -6,7 +6,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 public class BotVeronika extends TelegramLongPollingBot {
-
+    String word;
     /**
      * Метод для приема сообщений.
      * @param update Содержит сообщение от пользователя.
@@ -16,6 +16,11 @@ public class BotVeronika extends TelegramLongPollingBot {
         String message = update.getMessage().getText();
         if(message.equals("/start")) {
             sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + "!", update.getMessage().getChatId());
+        }
+        if(message.equals("/toUp"+word)) {
+            word.substring(7, word.length());
+            word.toUpperCase();
+            sendMsg(word, update.getMessage().getChatId());
         }
         if(message.equals("/help")) {
             sendMsg("Команды для работы с ботом: /start - начало чата, /help - список команд", update.getMessage().getChatId());
