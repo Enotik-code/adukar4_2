@@ -5,10 +5,6 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-
 public class BotYuri extends TelegramLongPollingBot {
 
     /**
@@ -17,13 +13,27 @@ public class BotYuri extends TelegramLongPollingBot {
      */
     @Override
     public void onUpdateReceived(Update update) {
+        var re = /яблоки/gi;
+        var str = 'Яблоки круглые и яблоки сочные.';
+        var newstr = str.replace(re, 'апельсины');
+        console.log(newstr); // апельсины круглые и апельсины сочные.
+
         String message = update.getMessage().getText();
+        sendMsg(message);
+
+        String mes = update.getMessage().getText();
+        sendMsg(mes);
+
+
+        /*String message = update.getMessage().getText();
         if(message.equals("/start")){
             sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + "!", update.getMessage().getChatId());
         }
         if(message.equals("/help")){
             sendMsg("Команды для работы с ботом: /start - начало чата, /help - список команд", update.getMessage().getChatId());
         }
+
+             */
     }
 
 
@@ -34,7 +44,7 @@ public class BotYuri extends TelegramLongPollingBot {
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
-            System.out.println( "Exception: " + e.toString());
+            System.out.println("Exception: " + e.toString());
         }
     }
 
@@ -50,5 +60,5 @@ public class BotYuri extends TelegramLongPollingBot {
      * @return token для бота
      */
     @Override
-    public String getBotToken() { return "1603408622:AAEnS0G5hKgX5ycrZBhDoiIf9Bq1UPLuITU"; }
+    public String getBotToken() { return "1603408622:AAFAJ7FyhBb1R6aYg5HrDAKQkAGgBAhQxFg"; }
 }
