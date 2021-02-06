@@ -27,7 +27,7 @@ public class BotYuri extends TelegramLongPollingBot {
     }
 
 
-    public synchronized void sendMsg(String s, Long Chat_id) {
+    public synchronized void sendMsg(String s, Long chat_id) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chat_id);
         sendMessage.setText(s);
