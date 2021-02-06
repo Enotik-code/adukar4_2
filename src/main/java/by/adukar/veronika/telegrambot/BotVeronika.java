@@ -18,11 +18,11 @@ public class BotVeronika extends TelegramLongPollingBot {
             sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + "!", update.getMessage().getChatId());
         }
         if(message.equals("/toUp"+word)) {
-            word.substring(7, word.length());
+            word = word.substring(7, word.length());
             sendMsg(word.toUpperCase(), update.getMessage().getChatId());
         }
         if(message.equals("/toLow"+word)) {
-            word.substring(8, word.length());
+            word = word.substring(8, word.length());
             sendMsg(word.toLowerCase(), update.getMessage().getChatId());
         }
         if(message.equals("/help")) {
