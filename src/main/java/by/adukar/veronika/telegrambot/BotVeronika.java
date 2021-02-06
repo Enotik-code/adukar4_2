@@ -33,13 +33,15 @@ public class BotVeronika extends TelegramLongPollingBot {
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
-            System.out.println( "Exception: " + e.toString());
+            System.out.println("Exception: " + e.toString());
         }
+    }
 
     /**
      * Метод возвращает имя бота, указанное при регистрации.
      * @return имя бота
      */
+
     @Override
     public String getBotUsername() {
         return "sportReporterBot";
