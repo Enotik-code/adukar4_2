@@ -21,6 +21,10 @@ public class BotVeronika extends TelegramLongPollingBot {
             word.substring(7, word.length());
             sendMsg(word.toUpperCase(), update.getMessage().getChatId());
         }
+        if(message.equals("/toLow"+word)) {
+            word.substring(8, word.length());
+            sendMsg(word.toLowerCase(), update.getMessage().getChatId());
+        }
         if(message.equals("/help")) {
             sendMsg("Команды для работы с ботом: /start - начало чата, /help - список команд", update.getMessage().getChatId());
         }
