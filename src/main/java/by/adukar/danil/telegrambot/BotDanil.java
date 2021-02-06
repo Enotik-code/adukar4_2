@@ -1,5 +1,6 @@
 package by.adukar.danil.telegrambot;
 
+import by.adukar.danil.telegrambot.time.TimeService;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Document;
 import org.telegram.telegrambots.api.objects.Update;
@@ -7,6 +8,9 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import java.time.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BotDanil extends TelegramLongPollingBot {
 
@@ -15,8 +19,13 @@ public class BotDanil extends TelegramLongPollingBot {
      * @param update Содержит сообщение от пользователя.
      */
     ArrayList<String> history = new ArrayList<>();
+    static Map<Integer, List<String>> map = new HashMap<>();
+
+
     @Override
     public void onUpdateReceived(Update update) {
+        TimeService times = new TimeService();
+
         String message = update.getMessage().getText();
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
