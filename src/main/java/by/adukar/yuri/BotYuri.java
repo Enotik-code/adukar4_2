@@ -6,26 +6,37 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 public class BotYuri extends TelegramLongPollingBot {
-
+    String word;
     /**
      * Метод для приема сообщений.
      * @param update Содержит сообщение от пользователя.
      */
     @Override
     public void onUpdateReceived(Update update) {
-        var re = /яблоки/gi;
-        var str = 'Яблоки круглые и яблоки сочные.';
-        var newstr = str.replace(re, 'апельсины');
-        console.log(newstr); // апельсины круглые и апельсины сочные.
-
         String message = update.getMessage().getText();
-        sendMsg(message);
 
-        String mes = update.getMessage().getText();
-        sendMsg(mes);
+        /*if(message.equals("/toUp"+word)) {
+            word = word.substring(7, word.length());
+            sendMsg(word.toUpperCase(), update.getMessage().getChatId());
+        }
+        if(message.equals("/toLow"+word)) {
+            word = word.substring(8, word.length());
+            sendMsg(word.toLowerCase(), update.getMessage().getChatId());
+        }
+
+         */
+
+       if(message.equals("/replace")){
+           word = word.substring(9, word.length());
+           sendMsg(word.replace("а", "о"), update.getMessage().getChatId());
+           System.out.println(word);
+           sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + "!", update.getMessage().getChatId());
+       }
 
 
-        /*String message = update.getMessage().getText();
+
+
+
         if(message.equals("/start")){
             sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + "!", update.getMessage().getChatId());
         }
@@ -33,8 +44,10 @@ public class BotYuri extends TelegramLongPollingBot {
             sendMsg("Команды для работы с ботом: /start - начало чата, /help - список команд", update.getMessage().getChatId());
         }
 
-             */
+
+
     }
+
 
 
     public synchronized void sendMsg(String s, Long chat_id) {
