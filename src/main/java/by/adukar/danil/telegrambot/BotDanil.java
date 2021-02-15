@@ -12,6 +12,7 @@ import java.util.HashMap;
 public class BotDanil extends TelegramLongPollingBot {
 
     /**
+     *
      * Метод для приема сообщений.
      * @param update Содержит сообщение от пользователя.
      */
