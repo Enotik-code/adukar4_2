@@ -32,7 +32,6 @@ public class BotDanil extends TelegramLongPollingBot {
         if (main2.containsKey(id)) { history = main2.get(id); }
         else {main2.put(id, new ArrayList<>());}
 
-
         history = main2.get(id);
         if(message.equals("/start")) {
             sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + "\nВот команды, которые я могу для вас выполнить:\n1) /start - Начать\n2) /help - Помощь для работы с ботом\n3) /commands - Показать список всех команд\n4) /time - Показать текущую дату и время\n5)/translate - Начать переводить текст\n6)/history - История запросов на время\n6)/clear - Очистить историю времени", update.getMessage().getChatId());
