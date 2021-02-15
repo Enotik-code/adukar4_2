@@ -9,6 +9,9 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.IOException;
+
+
 
 public class BotDanil extends TelegramLongPollingBot {
 
@@ -17,8 +20,7 @@ public class BotDanil extends TelegramLongPollingBot {
      * @param update Содержит сообщение от пользователя.
      */
     ArrayList<String> history = new ArrayList<>();
-    ArrayList<ArrayList<String>> mainList = new ArrayList<>();
-    public ArrayList<Integer> main = new ArrayList<>();
+    HashMap<Integer, ArrayList<String>> main2 = new HashMap<>();
     @Override
     public void onUpdateReceived(Update update) {
         String message = update.getMessage().getText();
@@ -31,6 +33,10 @@ public class BotDanil extends TelegramLongPollingBot {
         String second = Integer.toString(time.getSecond());
         String final_history = "";
         int id = update.getMessage().getChatId().intValue();
+        if (main2.containsKey(id)) { history = main2.get(id); }
+        else {main2.put(id, new ArrayList<>());}
+
+        history = main2.get(id);
         if(message.equals("/start")) {
             sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + "\nВот команды, которые я могу для вас выполнить:\n1) /start - Начать\n2) /help - Помощь для работы с ботом\n3) /commands - Показать список всех команд\n4) /time - Показать текущую дату и время\n5)/translate - Начать переводить текст\n6)/history - История запросов на время\n6)/clear - Очистить историю времени", update.getMessage().getChatId());
         }
@@ -51,15 +57,9 @@ public class BotDanil extends TelegramLongPollingBot {
             if (time.getMinute() < 10) {minute = "0" + Integer.toString(time.getMinute());}
             if (time.getSecond() < 10) {second = "0" + Integer.toString(time.getSecond());}
             sendMsg(date.getYear() +"-"+ month +"-"+ day +"\n"+ hour +":"+ minute +":"+ second, update.getMessage().getChatId());
-            //history = mainList.get(id);
-            //System.out.println(history);
-            //System.out.println("history");
             history.add(date.getYear() +"-"+ month +"-"+ day +" | "+ hour +":"+ minute +":"+ second);
-            main.add(15, 100);
-            //System.out.println(mainList);
         }
         if(message.equals("/history")) {
-
             if (history.size() != 0) {
                 for (int i = 0; i < history.size(); i++) {
                     final_history = final_history + (i + 1) + ") | " + history.get(i) + "\n";
@@ -72,13 +72,12 @@ public class BotDanil extends TelegramLongPollingBot {
         }
         if(message.equals("/clear")) {
             history.clear();
-
             final_history = "";
+            main2.remove(id);
             sendMsg("История успешно очищена", update.getMessage().getChatId());
         }
-        //else{
-            //sendMsg(update.getMessage().getText(), update.getMessage().getChatId());
-        //}
+        main2.put(id, history);
+        System.out.println(main2);
     }
 
 
