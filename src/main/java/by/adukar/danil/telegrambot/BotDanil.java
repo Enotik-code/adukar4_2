@@ -18,6 +18,7 @@ public class BotDanil extends TelegramLongPollingBot {
      */
 
 
+
     ArrayList<String> history = new ArrayList<>();
     HashMap<Integer, ArrayList<String>> main2 = new HashMap<>();
     @Override
