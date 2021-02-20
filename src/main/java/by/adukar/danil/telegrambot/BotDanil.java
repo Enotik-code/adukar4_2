@@ -16,6 +16,7 @@ public class BotDanil extends TelegramLongPollingBot {
      * Метод для приема сообщений.
      * @param update Содержит сообщение от пользователя.
      */
+
     ArrayList<String> history = new ArrayList<>();
     HashMap<Integer, ArrayList<String>> main2 = new HashMap<>();
     @Override
