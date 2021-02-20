@@ -13,6 +13,7 @@ public class MainDanil {
             telegramBotsApi.registerBot(new BotDanil());
         } catch (TelegramApiRequestException e) {
             e.printStackTrace();
+
         }
     }
 }
