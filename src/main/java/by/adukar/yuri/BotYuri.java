@@ -5,12 +5,11 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.sql.SQLOutput;
+
 public class BotYuri extends TelegramLongPollingBot {
     String word;
     boolean key;
-    boolean key11;
-    String num11 = new String("о");
-    String num12 = new String("а");
     /**
      * Метод для приема сообщений.
      * @param update Содержит сообщение от пользователя.
@@ -20,13 +19,15 @@ public class BotYuri extends TelegramLongPollingBot {
         String message = update.getMessage().getText();
         String rep = new String("/replace");
         String unrep = new String("/unrep");
+
+
+
         if(message.equals("/replace")){
             key = true;
-            sendMsg("Привет",update.getMessage().getChatId());
+            sendMsg("Привет! Вводи слово, а я буду менять букву 'о' на букву 'а'",update.getMessage().getChatId());
         }
         if(key==true && !message.equals(rep) && !message.equals(unrep)){
             String str=message;
-            System.out.print(str.replaceAll(num11,num12));
             sendMsg(str.replace('о','а'),update.getMessage().getChatId());
 
         }
