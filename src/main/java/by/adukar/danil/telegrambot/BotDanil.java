@@ -1,6 +1,5 @@
 package by.adukar.danil.telegrambot;
 
-import by.adukar.danil.telegrambot.time.TimeService;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Document;
 import org.telegram.telegrambots.api.objects.Update;
@@ -9,23 +8,21 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class BotDanil extends TelegramLongPollingBot {
 
     /**
+     *
      * Метод для приема сообщений.
      * @param update Содержит сообщение от пользователя.
      */
+
+
+
     ArrayList<String> history = new ArrayList<>();
-    static Map<Integer, List<String>> map = new HashMap<>();
-
-
+    HashMap<Integer, ArrayList<String>> main2 = new HashMap<>();
     @Override
     public void onUpdateReceived(Update update) {
-        TimeService times = new TimeService();
-
         String message = update.getMessage().getText();
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
@@ -35,6 +32,11 @@ public class BotDanil extends TelegramLongPollingBot {
         String minute = Integer.toString(time.getMinute());
         String second = Integer.toString(time.getSecond());
         String final_history = "";
+        int id = update.getMessage().getChatId().intValue();
+        if (main2.containsKey(id)) { history = main2.get(id); }
+        else {main2.put(id, new ArrayList<>());}
+
+        history = main2.get(id);
         if(message.equals("/start")) {
             sendMsg("Здравствуйте, " + update.getMessage().getFrom().getFirstName() + "\nВот команды, которые я могу для вас выполнить:\n1) /start - Начать\n2) /help - Помощь для работы с ботом\n3) /commands - Показать список всех команд\n4) /time - Показать текущую дату и время\n5)/translate - Начать переводить текст\n6)/history - История запросов на время\n6)/clear - Очистить историю времени", update.getMessage().getChatId());
         }
@@ -71,15 +73,16 @@ public class BotDanil extends TelegramLongPollingBot {
         if(message.equals("/clear")) {
             history.clear();
             final_history = "";
+            main2.remove(id);
             sendMsg("История успешно очищена", update.getMessage().getChatId());
         }
-        //else{
-            //sendMsg(update.getMessage().getText(), update.getMessage().getChatId());
-        //}
+        main2.put(id, history);
+        System.out.println(main2);
     }
 
 
-    public synchronized void sendMsg(String s, Long chat_id) {
+    public synchronized void sendMsg(String s, long chat_id) {
+
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chat_id);
         sendMessage.setText(s);
